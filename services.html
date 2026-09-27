@@ -112,6 +112,27 @@
     </div>
     <button id="install-btn" style="background:linear-gradient(135deg,#39B54A,#2A8638);color:white;border:none;border-radius:8px;padding:0.45rem 0.9rem;font-weight:700;font-size:0.82rem;cursor:pointer;white-space:nowrap;flex-shrink:0;">Install</button>
     <button id="install-dismiss" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.4rem;cursor:pointer;padding:0 0.1rem;line-height:1;flex-shrink:0;">&times;</button>
+
+  <!-- iOS Install Guide Modal -->
+  <div id="ios-modal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.6);align-items:flex-end;justify-content:center;">
+    <div style="background:white;border-radius:20px 20px 0 0;padding:1.75rem 1.5rem 2rem;width:100%;max-width:480px;position:relative;">
+      <button onclick="document.getElementById('ios-modal').style.display='none'" style="position:absolute;top:1rem;right:1rem;background:#eee;border:none;border-radius:50%;width:30px;height:30px;font-size:1.1rem;cursor:pointer;line-height:30px;text-align:center;">&times;</button>
+      <div style="font-weight:800;font-size:1.1rem;color:#085573;margin-bottom:1.25rem;text-align:center;">Add DOKDA to Your Home Screen</div>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div style="display:flex;align-items:center;gap:1rem;background:#f3fafd;border-radius:12px;padding:0.9rem 1rem;">
+          <div style="background:#085573;color:white;border-radius:10px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:1rem;">1</div>
+          <div style="font-size:0.92rem;color:#1a1a1a;">Tap the <strong>Share</strong> button <svg style="width:18px;height:18px;vertical-align:middle;" viewBox="0 0 24 24" fill="none" stroke="#085573" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> at the bottom of your Safari screen</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem;background:#f3fafd;border-radius:12px;padding:0.9rem 1rem;">
+          <div style="background:#085573;color:white;border-radius:10px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:1rem;">2</div>
+          <div style="font-size:0.92rem;color:#1a1a1a;">Scroll down and tap <strong>"Add to Home Screen"</strong></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem;background:#f3fafd;border-radius:12px;padding:0.9rem 1rem;">
+          <div style="background:#39B54A;color:white;border-radius:10px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:1rem;">3</div>
+          <div style="font-size:0.92rem;color:#1a1a1a;">Tap <strong>"Add"</strong> — DOKDA appears on your home screen!</div>
+        </div>
+      </div>
+    </div>
   </div>
   <nav class="navbar">
     <a href="index.html" class="nav-logo">
@@ -217,6 +238,7 @@
     // PWA Install Banner
     (function() {
       const banner = document.getElementById('install-banner');
+      const modal  = document.getElementById('ios-modal');
       const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
       const dismissed = localStorage.getItem('pwa-dismissed');
       if (isStandalone || dismissed) return;
@@ -224,26 +246,27 @@
       const isMobile = /mobile|android/i.test(navigator.userAgent) || isIOS;
       if (!isMobile) return;
       let deferredPrompt = null;
-      function showBanner() { banner.style.display = 'flex'; }
       if (isIOS) {
-        document.getElementById('install-sub').textContent = 'Tap Share \u2197 then \u201cAdd to Home Screen\u201d';
-        document.getElementById('install-btn').style.display = 'none';
-        showBanner();
+        banner.style.display = 'flex';
+        document.getElementById('install-btn').addEventListener('click', () => { modal.style.display = 'flex'; });
+        modal.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
       } else {
-        window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; showBanner(); });
+        window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; banner.style.display = 'flex'; });
+        document.getElementById('install-btn').addEventListener('click', async () => {
+          if (!deferredPrompt) return;
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          deferredPrompt = null; banner.style.display = 'none';
+        });
+        window.addEventListener('appinstalled', () => { banner.style.display = 'none'; });
       }
-      document.getElementById('install-btn').addEventListener('click', async () => {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        deferredPrompt = null; banner.style.display = 'none';
-      });
       document.getElementById('install-dismiss').addEventListener('click', () => {
         banner.style.display = 'none'; localStorage.setItem('pwa-dismissed', '1');
       });
-      window.addEventListener('appinstalled', () => { banner.style.display = 'none'; });
     })();
   </script>
 </body>
 </html>
+
+
 
