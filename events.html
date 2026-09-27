@@ -73,6 +73,7 @@
           <span class="leg-dot" style="background:#c8860a;"></span>Ladies Gathering
           <span class="leg-dot" style="background:#1055a0;"></span>Bangladeshi Ladies
           <span class="leg-dot" style="background:#7b3ea8;"></span>Bangladeshi Men
+          <span class="leg-dot" style="background:#e07b00;"></span>Kids Session
           <span class="leg-dot" style="background:#b83232;"></span>Student Support
         </div>
 
@@ -119,6 +120,10 @@
             <div class="sched-dot" style="background:#7b3ea8;"></div>
             <div><strong>Bangladeshi Men&rsquo;s Gathering</strong> &mdash; Every 4th Sunday &middot; 16:00&ndash;19:00</div>
           </div>
+          <div class="sched-item">
+            <div class="sched-dot" style="background:#e07b00;"></div>
+            <div><strong>Kids Session</strong> &mdash; Every Sunday &middot; 14:00&ndash;16:00</div>
+          </div>
         </div>
       </div>
     </div>
@@ -160,6 +165,7 @@
       { key:'ladies',    label:'Ladies Gathering',             time:'15:00–19:00', color:'#c8860a', rule: d => d.getDay()===0 && nthWeekdayOfMonth(d)===2 /* 2nd Sunday */ },
       { key:'bdlad',     label:'Bangladeshi Ladies Gathering', time:'',            color:'#1055a0', rule: d => d.getDay()===6 && nthWeekdayOfMonth(d)===3 /* 3rd Saturday */ },
       { key:'bdmen',     label:"Bangladeshi Men's Gathering",  time:'16:00–19:00', color:'#7b3ea8', rule: d => d.getDay()===0 && nthWeekdayOfMonth(d)===4 /* 4th Sunday */ },
+      { key:'kids',      label:'Kids Session',                 time:'14:00–16:00', color:'#e07b00', rule: d => d.getDay()===0 /* Every Sunday */ },
     ];
 
     function nthWeekdayOfMonth(d){
