@@ -60,6 +60,161 @@
       </div>
     </div>
   </section>
+  <!-- ===== COMMUNITY CALENDAR ===== -->
+  <section class="calendar-section">
+    <div class="container">
+      <h2 class="section-title reveal">Community Calendar</h2>
+      <p class="section-sub reveal" style="text-align:center;color:var(--text-muted);margin-bottom:2rem;">Click any highlighted date to see what&rsquo;s on. Green = event day.</p>
+
+      <div class="cal-wrap reveal">
+        <!-- Legend -->
+        <div class="cal-legend">
+          <span class="leg-dot" style="background:#1b6b36;"></span>Cleaning
+          <span class="leg-dot" style="background:#c8860a;"></span>Ladies Gathering
+          <span class="leg-dot" style="background:#1055a0;"></span>Bangladeshi Ladies
+          <span class="leg-dot" style="background:#7b3ea8;"></span>Bangladeshi Men
+          <span class="leg-dot" style="background:#b83232;"></span>Student Support
+        </div>
+
+        <!-- Month nav -->
+        <div class="cal-header">
+          <button class="cal-nav" id="cal-prev">&#8249;</button>
+          <span class="cal-month-label" id="cal-label"></span>
+          <button class="cal-nav" id="cal-next">&#8250;</button>
+        </div>
+
+        <!-- Weekday headers -->
+        <div class="cal-grid cal-days-header">
+          <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+        </div>
+
+        <!-- Date cells -->
+        <div class="cal-grid" id="cal-body"></div>
+
+        <!-- Event detail panel -->
+        <div class="cal-detail" id="cal-detail" style="display:none;"></div>
+      </div>
+
+      <!-- Recurring schedule list -->
+      <div class="reveal" style="margin-top:2rem;">
+        <h3 style="color:var(--blue-deeper);margin-bottom:1rem;font-size:1.1rem;">Regular Weekly &amp; Monthly Programme</h3>
+        <div class="schedule-list">
+          <div class="sched-item">
+            <div class="sched-dot" style="background:#1b6b36;"></div>
+            <div><strong>DOKDA Cleaning</strong> &mdash; Every Thursday &middot; 17:00&ndash;19:00</div>
+          </div>
+          <div class="sched-item">
+            <div class="sched-dot" style="background:#b83232;"></div>
+            <div><strong>Student Support Services</strong> &mdash; Every Friday after Jumu&rsquo;ah Prayer</div>
+          </div>
+          <div class="sched-item">
+            <div class="sched-dot" style="background:#c8860a;"></div>
+            <div><strong>Ladies Gathering</strong> &mdash; Every 2nd Sunday &middot; 15:00&ndash;19:00</div>
+          </div>
+          <div class="sched-item">
+            <div class="sched-dot" style="background:#1055a0;"></div>
+            <div><strong>Bangladeshi Ladies Gathering</strong> &mdash; Every 3rd Saturday of month</div>
+          </div>
+          <div class="sched-item">
+            <div class="sched-dot" style="background:#7b3ea8;"></div>
+            <div><strong>Bangladeshi Men&rsquo;s Gathering</strong> &mdash; Every 4th Sunday &middot; 16:00&ndash;19:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .cal-wrap { background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem; max-width:780px; margin:0 auto; }
+    .cal-legend { display:flex; flex-wrap:wrap; gap:0.75rem 1.25rem; font-size:0.8rem; color:var(--text-muted); margin-bottom:1.2rem; align-items:center; }
+    .leg-dot { display:inline-block; width:11px; height:11px; border-radius:50%; margin-right:4px; flex-shrink:0; }
+    .cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
+    .cal-month-label { font-size:1.15rem; font-weight:700; color:var(--blue-deeper); }
+    .cal-nav { background:none; border:1.5px solid var(--blue-light); border-radius:8px; width:36px; height:36px; font-size:1.4rem; cursor:pointer; color:var(--blue-deep); line-height:1; transition:background .2s; }
+    .cal-nav:hover { background:var(--blue-light); }
+    .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+    .cal-days-header { margin-bottom:4px; }
+    .cal-days-header div { text-align:center; font-size:0.75rem; font-weight:600; color:var(--text-muted); padding:4px 0; }
+    .cal-cell { min-height:52px; border-radius:8px; padding:4px 5px; font-size:0.85rem; position:relative; cursor:default; transition:background .15s; }
+    .cal-cell.other-month { color:#ccc; }
+    .cal-cell.today { background:var(--blue-light); font-weight:700; }
+    .cal-cell.has-event { cursor:pointer; background:#f0faf4; border:1.5px solid #b8dfc8; }
+    .cal-cell.has-event:hover { background:#d4f0e1; }
+    .cal-cell .cell-num { font-weight:600; font-size:0.9rem; }
+    .cal-dots { display:flex; flex-wrap:wrap; gap:2px; margin-top:3px; }
+    .cal-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .cal-detail { margin-top:1rem; background:#f8fbff; border-radius:10px; border-left:4px solid var(--green); padding:1rem 1.25rem; }
+    .cal-detail h4 { margin:0 0 0.5rem; color:var(--blue-deeper); font-size:1rem; }
+    .cal-detail ul { margin:0; padding-left:1.2rem; color:var(--text-muted); font-size:0.92rem; line-height:1.8; }
+    .schedule-list { display:flex; flex-direction:column; gap:0.75rem; max-width:780px; margin:0 auto; }
+    .sched-item { display:flex; align-items:flex-start; gap:0.75rem; background:#fff; border-radius:10px; padding:0.85rem 1rem; box-shadow:var(--shadow); font-size:0.95rem; color:var(--text); }
+    .sched-dot { width:13px; height:13px; border-radius:50%; flex-shrink:0; margin-top:3px; }
+    @media(max-width:500px){ .cal-cell { min-height:40px; font-size:0.75rem; } .cal-dot { width:6px; height:6px; } }
+  </style>
+
+  <script>
+  (function(){
+    const EVENTS = [
+      { key:'cleaning',  label:'DOKDA Cleaning',               time:'17:00–19:00', color:'#1b6b36', rule: d => d.getDay()===4 /* Thursday */ },
+      { key:'student',   label:'Student Support Services',     time:'After Jumu\'ah Prayer', color:'#b83232', rule: d => d.getDay()===5 /* Friday */ },
+      { key:'ladies',    label:'Ladies Gathering',             time:'15:00–19:00', color:'#c8860a', rule: d => d.getDay()===0 && nthWeekdayOfMonth(d)===2 /* 2nd Sunday */ },
+      { key:'bdlad',     label:'Bangladeshi Ladies Gathering', time:'',            color:'#1055a0', rule: d => d.getDay()===6 && nthWeekdayOfMonth(d)===3 /* 3rd Saturday */ },
+      { key:'bdmen',     label:"Bangladeshi Men's Gathering",  time:'16:00–19:00', color:'#7b3ea8', rule: d => d.getDay()===0 && nthWeekdayOfMonth(d)===4 /* 4th Sunday */ },
+    ];
+
+    function nthWeekdayOfMonth(d){
+      return Math.ceil(d.getDate()/7);
+    }
+
+    function eventsForDate(d){
+      return EVENTS.filter(e => e.rule(d));
+    }
+
+    let cur = new Date(); cur.setDate(1);
+
+    function render(){
+      const y = cur.getFullYear(), m = cur.getMonth();
+      document.getElementById('cal-label').textContent = cur.toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+      const first = new Date(y,m,1);
+      let startDow = first.getDay(); // 0=Sun
+      startDow = startDow===0 ? 6 : startDow-1; // Mon=0
+      const daysInMonth = new Date(y,m+1,0).getDate();
+      const today = new Date();
+
+      let html='';
+      // leading blanks
+      for(let i=0;i<startDow;i++) html+=`<div class="cal-cell other-month"></div>`;
+      for(let d=1;d<=daysInMonth;d++){
+        const dt = new Date(y,m,d);
+        const evs = eventsForDate(dt);
+        const isToday = today.getFullYear()===y && today.getMonth()===m && today.getDate()===d;
+        let cls='cal-cell'+(isToday?' today':'')+(evs.length?' has-event':'');
+        let dots = evs.map(e=>`<div class="cal-dot" style="background:${e.color};"></div>`).join('');
+        html+=`<div class="${cls}" data-date="${y}-${m+1}-${d}"><div class="cell-num">${d}</div><div class="cal-dots">${dots}</div></div>`;
+      }
+      document.getElementById('cal-body').innerHTML=html;
+      document.getElementById('cal-detail').style.display='none';
+
+      document.querySelectorAll('.cal-cell.has-event').forEach(cell=>{
+        cell.addEventListener('click',function(){
+          const [cy,cm,cd]=this.dataset.date.split('-').map(Number);
+          const dt=new Date(cy,cm-1,cd);
+          const evs=eventsForDate(dt);
+          const label=dt.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+          const detail=document.getElementById('cal-detail');
+          detail.style.display='block';
+          detail.innerHTML=`<h4>${label}</h4><ul>${evs.map(e=>`<li><span style="color:${e.color};font-weight:600;">${e.label}</span>${e.time?' &mdash; '+e.time:''}</li>`).join('')}</ul>`;
+          detail.scrollIntoView({behavior:'smooth',block:'nearest'});
+        });
+      });
+    }
+
+    document.getElementById('cal-prev').addEventListener('click',()=>{ cur.setMonth(cur.getMonth()-1); render(); });
+    document.getElementById('cal-next').addEventListener('click',()=>{ cur.setMonth(cur.getMonth()+1); render(); });
+    render();
+  })();
+  </script>
+
   <section class="announcements-section">
     <div class="container reveal">
       <h2 class="section-title">Announcements</h2>
