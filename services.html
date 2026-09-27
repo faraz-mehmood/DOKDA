@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Services &ndash; DOKDA Darmstadt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .services-section { padding: 3.5rem 2rem; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .service-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 5px;
+      background: linear-gradient(90deg, var(--green), var(--blue), var(--green));
+      background-size: 200% 100%;
+      animation: gradientShift 4s ease infinite;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,0.13); }
+    .service-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    .service-icon .icon { width: 34px; height: 34px; stroke-width: 1.8; }
+    .service-icon.green { background: linear-gradient(135deg, var(--green), var(--green-dark)); color: white; }
+    .service-icon.blue  { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); color: white; }
+    .service-card h3 { font-size: 1.3rem; font-weight: 800; color: var(--blue-deeper); margin: 0; }
+    .service-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin: 0; }
+    .service-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--bg2); color: var(--green-dark);
+      font-size: 0.8rem; font-weight: 700;
+      padding: 4px 14px; border-radius: 20px;
+      border: 1px solid #b8dfc8; letter-spacing: 0.04em;
+    }
+    .btn-service {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: linear-gradient(270deg, var(--green), #2ecc71, var(--green));
+      background-size: 200% 100%; animation: gradientShift 3s ease infinite;
+      color: white; font-weight: 700; font-size: 1rem;
+      padding: 0.85rem 2rem; border-radius: 10px;
+      text-decoration: none; transition: all 0.3s;
+      box-shadow: 0 4px 16px rgba(57,181,74,0.3);
+      margin-top: 0.5rem;
+    }
+    .btn-service:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(57,181,74,0.45); }
+    .btn-service-blue {
+      background: linear-gradient(270deg, var(--blue-dark), var(--blue), var(--blue-dark));
+      box-shadow: 0 4px 16px rgba(13,127,173,0.3);
+    }
+    .btn-service-blue:hover { box-shadow: 0 8px 28px rgba(13,127,173,0.45); }
+    .service-note {
+      font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;
+    }
+    .ehram-detail {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      width: 100%;
+      text-align: left;
+    }
+    .ehram-detail li {
+      display: flex; align-items: center; gap: 0.6rem;
+      color: var(--text-muted); font-size: 0.9rem; padding: 0.3rem 0;
+    }
+    .ehram-detail li::before {
+      content: '✓';
+      color: var(--green); font-weight: 700; flex-shrink: 0;
+    }
+    @media (max-width: 640px) {
+      .services-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="logo.png" alt="DOKDA Logo" />
+      <div class="nav-logo-text">
+        <span class="logo-name">DOKDA</span>
+        <span class="logo-sub">Deutsch Orientalischer Kulturverein<br>Darmstadt</span>
+      </div>
+    </a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="membership.html">Membership</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="donate.html" class="btn-donate-nav">Donate</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <h1>Community Services</h1>
+    <p>Services available to the DOKDA community</p>
+    <div class="hero-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,32 C240,60 480,0 720,20 C960,40 1200,58 1440,24 L1440,60 L0,60 Z" fill="#F3FAFD"/></svg></div>
+  </div>
+
+  <section class="services-section">
+    <div class="container">
+      <div class="services-grid">
+
+        <!-- Halal Meat Order -->
+        <div class="service-card reveal">
+          <div class="service-icon green">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+          </div>
+          <span class="service-badge">
+            <svg class="icon" style="width:13px;height:13px;" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            Halal Certified
+          </span>
+          <h3>Halal Meat Order</h3>
+          <p>Order fresh, certified Halal meat through DOKDA. Fill in the order form and we will get back to you with collection details.</p>
+          <a href="https://forms.gle/M4MERdrvMtF2ScNWA" target="_blank" rel="noopener noreferrer" class="btn-service">
+            <svg class="icon" style="width:18px;height:18px;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Place an Order
+          </a>
+          <p class="service-note">You will be contacted after submitting the form.</p>
+        </div>
+
+        <!-- Ehram -->
+        <div class="service-card reveal">
+          <div class="service-icon blue">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <span class="service-badge" style="color:var(--blue-dark);border-color:#b8dff0;">
+            <svg class="icon" style="width:13px;height:13px;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Available at DOKDA
+          </span>
+          <h3>Ehram Available</h3>
+          <p>Ehram (Ihram) cloth is available at DOKDA for brothers preparing for Hajj or Umrah. Come and collect from the centre.</p>
+          <ul class="ehram-detail" style="list-style:none;padding:0;">
+            <li>Available for brothers preparing for Hajj &amp; Umrah</li>
+            <li>Collect in person at DOKDA</li>
+            <li>Dieburger Str. 10, 64287 Darmstadt</li>
+          </ul>
+          <a href="about.html" class="btn-service btn-service-blue">
+            <svg class="icon" style="width:18px;height:18px;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Find Us
+          </a>
+          <p class="service-note">Contact us via WhatsApp to confirm availability.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="DOKDA" class="footer-logo" />
+        <span>DOKDA</span>
+      </div>
+      <p>Dieburger Str. 10 &middot; 64287 Darmstadt-Nord &middot; Germany</p>
+      <p class="footer-contact"><svg class="icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg> +49 157 53814555</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/DokdaDarmstadt" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/dokda.1" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+      <p class="footer-copy">&copy; <span id="year"></span> DOKDA e.V. &middot; All rights reserved</p>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
